@@ -21,7 +21,49 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
+
+    //-----------------------------------------------------------------------------------------------------
+    //paths, nécessite baseUrl, et permet de spécifier plusieurs chemins de recherche plus pécis, 
+    //et TOUS relatifs à baseUrl !! Attention ne concerne QUE la recherche pour les modules à importer 
+    //pour lesquels on n'a pas précisé de chemin Relatif lors de la syntaxe d'import.
+    //ATTENTION : dés lors que paths est précisé, la recherche baseUrl combinée avec paths est PRIORITAIRE
+    // sur celle avec baseUrl toute seule !
+    //3 cas de figures plus précisément: 
+    //  1- aucune clef de l'objet paths ne match avec le nom de l'import à chercher, 
+    //    alors la recherche essaiera avec baseUrl toute seule.
+    //  2- au moins 1 clef de l'objet paths match avec le nom de l'import à chercher,
+    //     alors :
+    //            2a- si un élément du tableau associé match, eh bien ok le module est trouvé. Fin de la recherche.
+    //            2b- aucun élément du tableau associé ne match, alors la recherche avec paths est abandonnée
+    //                ET la recherche avec baseUrl toute seule est AUSSI abandonnée !! <<<<<<
+    "paths": {
+      
+      //Clef "*" => signifie recherche à faire pour tout module à import non-relatif
+      // //            Cette "*" représente tout simplement le nom du module à chercher <<<<
+      // "*" :[ //Ici les "**" sont interdits, contrairement à la directive "include"
+      //   //"*",   //le nom du module à chercher tel quel, dans baseUrl donc.
+      //   "GG/*" //le nom du module à chercher précédé par le chemin baseUrl/GG/
+      // ],
+
+      // //Clef "myFunctions"
+      // "myFunctions" :[   //Lorsqu'il n'y a pas d "*" dans la clef, comme ici,
+      //                    //alors utiliser "*" ci-dessous est sans effet.
+      //   //chemin relatif à baseUrl je rappelle.                          
+      //   //"../../node_modules/tst_Lib/*" //<<< sans effet !!
+      //   "../../node_modules/tst_Lib/myFunctions" //<<< OK
+      // ],
+
+      //Clef "nimp*"
+      // "nimp*" : ["../../node_modules/tstt/nimporte"],  //chemin relatif à baseUrl je rappelle.
+      
+      "@FrontEnd_SiqModules*": ["src/app/FrontEnd_SiqModules*"],
+
+      "@BackEnd_SiqModules_ApplicationServices*": ["src/BackEnd_SiqModules/Application/Services*"],
+
+      "@Helpers_Module*": ["src/Helpers_Module*"],
+    }
+
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
