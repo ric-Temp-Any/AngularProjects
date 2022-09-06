@@ -9,11 +9,14 @@ import {
 import { IClass } from "@Helpers_Module/";
 import { SiqAmbienceComponent } from "./Components";
 
-export type InjectionTokensList = {[key: string]: InjectionToken<any>};
-export type InjectionTokens = {[key: string]: InjectionTokensList};
-type InjectionTokensMap = Map<IClass<any>, InjectionTokensList>;
+type TComponentOrService = IClass<any>;
 
-export const maMap: InjectionTokensMap = new Map<IClass<any>, InjectionTokensList>([
+export type InjectionTokensList = {[key: string]: InjectionToken<any>};
+// export type InjectionTokens = {[key: string]: InjectionTokensList};
+type InjectionTokensMap = Map<TComponentOrService, InjectionTokensList>;
+
+
+export const maMap: InjectionTokensMap = new Map<TComponentOrService, InjectionTokensList>([
   [SiqAmbienceComponent, {
     "ISiqAmbienceService": new InjectionToken<ISiqAmbienceService>("")
   }]
